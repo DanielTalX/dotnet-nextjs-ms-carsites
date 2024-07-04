@@ -483,3 +483,4 @@ infra/prod-k8s/le-issuer-staging.yml
 source/
 assets/summary/sections/*/*.png
 assets/summary/sections/*/*.jpeg
+assets/summary/sections/*/*.jpg
