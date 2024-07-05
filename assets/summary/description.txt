@@ -19,3 +19,20 @@ Sec02 - Creating the first microservice
     - put thw webapi project inside the Carsties solution
         - cd Carsties
         - dotnet sln add src/AuctionService
+- Reviewing and simplifying the project
+    - in AuctionService.csproj:
+        - set Nullable to disable
+        - remain ImplicitUsings to enable
+        - reamove all items in ItemGroup
+    - in launchSettings.json:
+        - remove iisSettings
+        - remove https & IIS Express profiles
+        - in http profile:
+            - set launchBrowser to false
+            - remove line "launchUrl": "swagger"
+            - set "applicationUrl": "http://localhost:7001",
+    - in appsettings.Development.json set  "Microsoft.AspNetCore": "Information"
+    - Program.cs: remove anything that related to swagger
+    - debuging the AuctionService:
+        - cd src/AuctionService
+        - AuctionService watch

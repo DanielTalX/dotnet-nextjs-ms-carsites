@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AuctionService.Controllers;
 
+//baseurl/weatherforecast
 [ApiController]
 [Route("[controller]")]
 public class WeatherForecastController : ControllerBase
