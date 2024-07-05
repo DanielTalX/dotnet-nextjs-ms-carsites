@@ -35,4 +35,29 @@ Sec02 - Creating the first microservice
     - Program.cs: remove anything that related to swagger
     - debuging the AuctionService:
         - cd src/AuctionService
-        - AuctionService watch
+        - dotnet watch
+- Adding the entity classes
+    - an entity represents a table inside a db
+    - each of the entity properties represents a column inside that db
+    - Auction, Item, Status
+- Adding the Database context class
+    - add Microsoft.EntityFrameworkCore.Design @Microsoft package to AuctionService from nuget gallery
+    - add Npgsql.EntityFrameworkCore.PostgreSQL @Shay Rojansky,Austin Drenski,Yoh Deadfall package to AuctionService from nuget gallery
+    - add AutoMapper.Extensions.Microsoft.DependencyInjection @Jimmy Bogard package to AuctionService from nuget gallery
+    - add AuctionDbContext class
+    - update program.cs to use the AuctionDbContext service and add it to the container
+    - create db migration:
+        - using dotnet-ef tool: to check if dotnet-ef tool installed globaly in the computer by: dotnet tool list -g
+            if not, install it by: dotnet tool install dotnet-ef -g, or update it by: dotnet tool update dotnet-ef -g
+        - execute the commands to create a new migration, which is going to take a look at our code and what we've written, 
+            the Dbcontext class, and it's going to create a migration that will set up the database schema based on the code that we've written.
+        - in AuctionService: dotnet ef migrations add "InitialCreate" -o Data/Migrations
+- Adding a Postgres database server
+    - install docker from https://docker.com & install docker vsc extension
+    - inside the solution folder [Carsties] create docker-compose.yml file
+    - [Carsties] run the docker compose file by: docker compose up -d
+    - [AuctionService] run: dotnet ef database update
+    - install PostgreSQL extension by Chris Kolkman & see the db
+- Creating seed data
+    - [AuctionService] to drop the db: dotnet ef database drop
+    - run AuctionService & see the seed data

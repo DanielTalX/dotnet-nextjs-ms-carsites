@@ -10,3 +10,11 @@
     dotnet new webapi -o src/AuctionService --use-controllers
 - add the webapi project to Carsties solution:
     dotnet sln add src/AuctionService/
+- debug/run AuctionService:
+    - cd src/AuctionService/
+    - dotnet watch
+- db migration:
+    - using dotnet-ef tool: to check if dotnet-ef tool installed globaly in the computer by: dotnet tool list -g
+        if not, install it by: dotnet tool install dotnet-ef -g, or update it by: dotnet tool update dotnet-ef -g
+    - [AuctionService] add migration: dotnet ef migrations add "InitialCreate" -o Data/Migrations
+    - [AuctionService] drop the db: dotnet ef database drop
