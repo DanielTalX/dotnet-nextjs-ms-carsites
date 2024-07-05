@@ -18,6 +18,7 @@ public class DbInitializer
     {
         context.Database.Migrate();
 
+        // SELECT EXISTS (SELECT 1 FROM "Auctions" AS a)
         if (context.Auctions.Any())
         {
             Console.WriteLine("Already have data - no need to seed");

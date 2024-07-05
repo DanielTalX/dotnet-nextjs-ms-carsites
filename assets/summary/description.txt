@@ -61,3 +61,11 @@ Sec02 - Creating the first microservice
 - Creating seed data
     - [AuctionService] to drop the db: dotnet ef database drop
     - run AuctionService & see the seed data
+- Shaping the data to return
+    - create DTOs folder
+    - create RequestHelpers folder
+    - update program.cs to use the AutoMapper service and add it to the container
+- Adding an API controller
+- Adding a postman collection
+- Adding the create, update, delete auction endpoints
+
