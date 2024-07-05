@@ -1,0 +1,12 @@
+* sec02
+- list and info for the diffrent dotnet sdk that have installed in the computer
+    dotnet --info
+- list of commands that can create with dotnet sdk:
+    dotnet new list
+- create a solution (folder name is the solution name):
+    - cd Carsties
+    - dotnet new sln
+- create a webapi project with dotnet v8:
+    dotnet new webapi -o src/AuctionService --use-controllers
+- add the webapi project to Carsties solution:
+    dotnet sln add src/AuctionService/

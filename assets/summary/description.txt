@@ -1,0 +1,21 @@
+npm config set registry https://registry.npmjs.org/
+
+Sec02 - Creating the first microservice
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- goals:
+    - Creating a simple API for the Auctions
+    - CRUD
+    - Seeding Data
+    - Using Docker compose
+    - Using Postman to test the API
+- Creating the first micro service
+    - create Carsties solution:
+        - mkdir Carsties
+        - cd Carsties
+        - dotnet new sln
+    - create a webapi project with dotnet v8:
+        - cd Carsties
+        - dotnet new webapi -o src/AuctionService --use-controllers
+    - put thw webapi project inside the Carsties solution
+        - cd Carsties
+        - dotnet sln add src/AuctionService
