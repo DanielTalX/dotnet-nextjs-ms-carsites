@@ -69,3 +69,19 @@ Sec02 - Creating the first microservice
 - Adding a postman collection
 - Adding the create, update, delete auction endpoints
 
+
+Sec03 - Creating a Search microservice
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- goals:
+    - Creating a Search Service
+    - Adding MongoDb
+    - Sync communication between Services
+    - Creating the second micro services
+        - [Carsties] dotnet new webapi -o src/SearchService --use-controllers
+        - [Carsties] dotnet sln add src/SearchService
+        - clean the project as earlier
+        - add nuget packages from gallery:
+            - MongoDB.Entities @Đĵ ΝιΓΞΗΛψΚ
+            - AutoMapper.Extensions.Microsoft.DependencyInjection @Jimmy Bogard
+        - [SearchService] verify everything is ok by: dotnet build
+        - [SearchService] run by: dotnet watch
