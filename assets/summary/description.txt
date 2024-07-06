@@ -103,3 +103,24 @@ Sec03 - Creating a Search microservice
     - add nuget gallery: Microsoft.Extensions.Http.Polly @Microsoft
 
 
+Sec04 - RabbitMQ
+~~~~~~~~~~~~~~~~
+- What is RabbitMQ
+- Installing RabbitMQ
+    - https://rabbitmq.com
+    - http://localhost:15672
+        - Username: guest
+        - Password: guest
+- Adding and configuring mass transit
+    - https://masstransit.io
+    - nuget gallery: MassTransit.RabbitMQ @Chris Patterson to both AuctionService & SearchService 
+    - add shared lib for MassTransit:
+        - [Carsties] dotnet new classlib -o src/Contracts
+        - [Carsties] dotnet sln add src/Contracts
+        - [Contracts.csproj] set Nullable to disable
+    - add a reference to Contracts library from both the auction & search service
+        - [AuctionService] dotnet add reference ../../src/Contracts
+        - [SearchService] dotnet add reference ../../src/Contracts
+- Adding the contracts
+- Adding a consumer to consume a message from the Service bus
+- Publishing the Auction Created event to the bus

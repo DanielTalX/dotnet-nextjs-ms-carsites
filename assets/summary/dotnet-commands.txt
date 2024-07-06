@@ -18,3 +18,9 @@
         if not, install it by: dotnet tool install dotnet-ef -g, or update it by: dotnet tool update dotnet-ef -g
     - [AuctionService] add migration: dotnet ef migrations add "InitialCreate" -o Data/Migrations
     - [AuctionService] drop the db: dotnet ef database drop
+* sec04
+- create a shared lib:
+    - [Carsties] dotnet new classlib -o src/Contracts
+    - [Carsties] dotnet sln add src/Contracts
+- add a reference to the shared library from a service
+    - [AuctionService] dotnet add reference ../../src/Contracts
