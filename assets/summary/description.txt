@@ -124,3 +124,13 @@ Sec04 - RabbitMQ
 - Adding the contracts
 - Adding a consumer to consume a message from the Service bus
 - Publishing the Auction Created event to the bus
+- What could go wrong?
+- Adding a message outbox
+    - add nuget gallery to AuctionService: MassTransit.EntityFrameworkCore @Chris Patterson
+    - override OnModelCreating in [AuctionDbContext.cs] file to support outbox
+    - add a migration to support outbox:
+        - dotnet ef migrations add Outbox
+- Using message retries
+- Consuming fault queues
+- Challenge + Solution: Adding the update and delete consumers
+
