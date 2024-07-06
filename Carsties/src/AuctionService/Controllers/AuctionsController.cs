@@ -2,6 +2,7 @@ using AuctionService.Data;
 using AuctionService.DTOs;
 using AuctionService.Entities;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,7 +22,27 @@ public class AuctionsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<AuctionDto>>> GetAllAuctions()
+    public async Task<ActionResult<List<AuctionDto>>> GetAllAuctions(string date)
+    {
+        var query = _context.Auctions.OrderBy(x => x.Item.Make).AsQueryable();
+
+        if (!string.IsNullOrEmpty(date))
+        {
+            query = query.Where(x => x.UpdatedAt.CompareTo(DateTime.Parse(date).ToUniversalTime()) > 0);
+        }
+        
+        /*
+        SELECT a."Id", a."ReservePrice", a."Seller", a."Winner", COALESCE(a."SoldAmount", 0), COALESCE(a."CurrentHighBid", 0), a."CreatedAt", a."UpdatedAt", a."AuctionEnd", a."Status",
+         i."Make", i."Model", i."Year", i."Color", i."Mileage", i."ImageUrl"
+        FROM "Auctions" AS a
+        LEFT JOIN "Items" AS i ON a."Id" = i."AuctionId"
+        ORDER BY i."Make"
+        */
+        return await query.ProjectTo<AuctionDto>(_mapper.ConfigurationProvider).ToListAsync();
+    }
+
+    [HttpGet("unused")]
+    public async Task<ActionResult<List<AuctionDto>>> GetAllAuctionsOptions()
     {
         /*
         SELECT a."Id", a."AuctionEnd", a."CreatedAt", a."CurrentHighBid", a."ReservePrice", a."Seller", a."SoldAmount", a."Status", a."UpdatedAt", a."Winner",

@@ -1,0 +1,9 @@
+* Sec03
+- run docker (to create the dbs)
+    - docker compose up -d
+- see the volumes that created from docker
+    - docker volume list
+- delete docker volume
+    - docker volume rm volume_name
+- delete docker container
+    - docker compose down

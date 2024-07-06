@@ -1,0 +1,3 @@
+- [Carsties] docker compose up -d
+- [AuctionService] dotnet watch
+- [SearchService] dotnet watch
