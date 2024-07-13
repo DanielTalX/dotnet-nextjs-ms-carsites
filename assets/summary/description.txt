@@ -145,3 +145,15 @@ Sec05 - Identity Server
     - [Carsties] dotnet new isaspid -o src/IdentityServer
         -> run seed? No
     - [Carsties] dotnet sln add src/IdentityServer
+- Reviewing and configuring our new project
+    - [IdentityServer] remove PackageReference - "Microsoft.EntityFrameworkCore.Sqlite" from [IdentityServer.csproj]
+    - [IdentityServer] install gallery nuget package: Npgsql.EntityFrameworkCore.PostgreSQL @Shay Rojansky,Austin Drenski,Yoh Deadfall
+    - [IdentityServer.Properties.launchSettings.json] - set applicationUrl to http://localhost:5000
+    - [HostingExtensions.cs] updates
+    - run dotnet watch
+- Seeding data and adding a migration
+- Reviewing the login page in identity server
+    - [SeedData.cs] updates
+    - delete [Data/Migrations] folder
+    - dotnet ef migrations add "InitialCreate" -o Data/Migrations
+- Adding a register page
