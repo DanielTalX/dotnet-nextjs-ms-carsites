@@ -134,3 +134,14 @@ Sec04 - RabbitMQ
 - Consuming fault queues
 - Challenge + Solution: Adding the update and delete consumers
 
+
+Sec05 - Identity Server
+~~~~~~~~~~~~~~~~~~~~~~~
+- Introduction to Section 5
+- 0Auth and OpenlDConnect
+- Creating the Identity Server project
+    - Duende - https://docs.duendesoftware.com/identityserver/v7/quickstarts/0_overview/
+        - [Carsties] dotnet new install Duende.IdentityServer.Templates
+    - [Carsties] dotnet new isaspid -o src/IdentityServer
+        -> run seed? No
+    - [Carsties] dotnet sln add src/IdentityServer
