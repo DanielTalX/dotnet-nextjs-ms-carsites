@@ -165,3 +165,16 @@ Sec05 - Identity Server
     - [AuctionService] install gallery nuget package: Microsoft.AspNetCore.Authentication.JwtBearer @Microsoft
 - Configuring the auth endpoints on the resource server
 
+
+Sec06 - Adding a Gateway service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Introduction to Section 6
+- Adding the Gateway service
+    - [Carsties] dotnet new web -o src/GatewayService
+    - [Carsties] dotnet sln add src/GatewayService
+    - [GatewayService] clean the project as earlier [GatewayService.csproj, launchSettings.json, appsettings.Development.json]
+    - [GatewayService] install gallery nuget package:
+        - Yarp.ReverseProxy @Microsoft
+        - Microsoft.AspNetCore.Authentication.JwtBearer @Microsoft
+- Adding the Reverse Proxy configuration
+    - https://microsoft.github.io/reverse-proxy/
