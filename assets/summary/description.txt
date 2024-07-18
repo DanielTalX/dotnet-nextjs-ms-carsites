@@ -180,3 +180,9 @@ Sec06 - Adding a Gateway service
     - https://microsoft.github.io/reverse-proxy/
 - Adding authentication to the Gateway config
 - Testing our Gateway service in Postman
+- finishing the remaining services before docker
+    - Adding the remaining contracts we need
+    - Adding the remaining consumers to the Auction Service
+    - Adding the remaining consumers in the Search Service
+    - Adding a new client to the Identity service configuration
+
