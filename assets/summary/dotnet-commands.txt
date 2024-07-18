@@ -24,3 +24,7 @@
     - [Carsties] dotnet sln add src/Contracts
 - add a reference to the shared library from a service
     - [AuctionService] dotnet add reference ../../src/Contracts
+* sec06
+- create a web for a gateway service
+    - [Carsties] dotnet new web -o src/GatewayService
+    - [Carsties] dotnet sln add src/GatewayService

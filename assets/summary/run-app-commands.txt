@@ -2,3 +2,4 @@
 - [AuctionService] dotnet watch
 - [SearchService] dotnet watch
 - [IdentityServer] dotnet watch
+- [GatewayService] dotnet watch

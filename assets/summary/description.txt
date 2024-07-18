@@ -178,3 +178,5 @@ Sec06 - Adding a Gateway service
         - Microsoft.AspNetCore.Authentication.JwtBearer @Microsoft
 - Adding the Reverse Proxy configuration
     - https://microsoft.github.io/reverse-proxy/
+- Adding authentication to the Gateway config
+- Testing our Gateway service in Postman
