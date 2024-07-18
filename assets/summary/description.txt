@@ -157,3 +157,11 @@ Sec05 - Identity Server
     - delete [Data/Migrations] folder
     - dotnet ef migrations add "InitialCreate" -o Data/Migrations
 - Adding a register page
+- Adding client credentials to allow clients to request a token
+    - https://docs.duendesoftware.com/identityserver/v7/tokens/password_grant/
+    - https://jwt.io/
+- Adding a custom profile service to identity server
+- Configuring auth on the resource server
+    - [AuctionService] install gallery nuget package: Microsoft.AspNetCore.Authentication.JwtBearer @Microsoft
+- Configuring the auth endpoints on the resource server
+
