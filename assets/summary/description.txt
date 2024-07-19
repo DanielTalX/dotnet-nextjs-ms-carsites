@@ -186,3 +186,15 @@ Sec06 - Adding a Gateway service
     - Adding the remaining consumers in the Search Service
     - Adding a new client to the Identity service configuration
 
+
+Sec07 - Dockerizing the application
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Introduction to Section 7
+- Dockerizing the Auction Service
+- Updating our docker compose file for the Auction Service container
+- Dockerising the Search service
+- Dockerising the Identity Service
+- Debugging a .Net service in a docker container
+- Dockerising the Gateway Service
+- Testing our docker containers
+

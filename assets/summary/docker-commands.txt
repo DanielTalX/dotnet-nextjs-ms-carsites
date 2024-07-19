@@ -7,3 +7,14 @@
     - docker volume rm volume_name
 - delete docker container
     - docker compose down
+* Sec07
+- Stop container on current dir if there is a docker-compose.yml
+    - docker-compose down  
+- Remove all containers
+    - docker rm -fv $(docker ps -aq)
+- get all active ports
+    - sudo lsof -PiTCP -sTCP:LISTEN
+- List who's using the port
+    - sudo lsof -i -P -n | grep <port number>
+- kill process
+    - kill <process id>
