@@ -198,3 +198,11 @@ Sec07 - Dockerizing the application
 - Dockerising the Gateway Service
 - Testing our docker containers
 
+
+Sec08 - Adding the client side app
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Introduction to Section 8
+- Creating the NextJS project
+    - https://nextjs.org/docs/getting-started/installation
+        - [Carsties/fronted] npx create-next-app@latest
+        - [web-app] npm run dev
