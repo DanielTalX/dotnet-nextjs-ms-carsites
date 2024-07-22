@@ -206,3 +206,13 @@ Sec08 - Adding the client side app
     - https://nextjs.org/docs/getting-started/installation
         - [Carsties/fronted] npx create-next-app@latest
         - [web-app] npm run dev
+    - VSC Extension: 
+        - Tailwind CSS IntelliSense
+        - ES7+ React/Redux/React-Native snippets
+        - Auto Close Tag
+    - learn flex: https://flexboxfroggy.com/
+    - react icons: https://react-icons.github.io/react-icons/
+- Reviewing and simplifying the NextJS Project
+    - Anything that we put inside the app folder is considered a server component
+        and it's going to be rendered on the server side and return just the HTML to the client browser.
+- Creating a nav bar
