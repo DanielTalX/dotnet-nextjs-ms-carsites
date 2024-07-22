@@ -216,3 +216,13 @@ Sec08 - Adding the client side app
     - Anything that we put inside the app folder is considered a server component
         and it's going to be rendered on the server side and return just the HTML to the client browser.
 - Creating a nav bar
+- Fetching data from the API
+    - done in the server side
+- Adding an Auction Card component
+- Styling the auction cards
+    - [next.config.mjs] allow image url
+    - [tailwind.config.ts] enable css plugins
+- Adding a countdown timer to the auction card
+    - done in the client side by using 'use client'
+- Adding loading to the images
+- Adding types to the project
