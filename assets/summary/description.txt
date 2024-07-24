@@ -226,3 +226,7 @@ Sec08 - Adding the client side app
     - done in the client side by using 'use client'
 - Adding loading to the images
 - Adding types to the project
+- Adding pagination to our list
+    - https://flowbite-react.com/docs/getting-started/introduction
+- Using server functions in client components
+- Adding a set page size option
