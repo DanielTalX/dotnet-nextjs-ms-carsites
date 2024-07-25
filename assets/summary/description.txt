@@ -252,3 +252,8 @@ Sec09: Client side identity with NextAuth (AuthJS)
     - identity-svc url -> inspect -> Application -> Cookies -> delete all Cookies
 - Getting the session details in the client
     - adding env.local file so NextAuth could decrept token
+- Populating the session data
+    - NextAuth witj typescript - add user name to session.user
+        - https://next-auth.js.org/getting-started/typescript#module-augmentation
+        - creteing [next-auth.d.ts]
+- Populating the User actions dropdown
