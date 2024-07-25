@@ -263,3 +263,9 @@ Sec09: Client side identity with NextAuth (AuthJS)
 - Getting the access token to use to authenticate to our resource server
     - https://next-auth.js.org/tutorials/securing-pages-and-api-routes#using-gettoken
 
+
+Sec10: CRUD operations in the client app
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Introduction
+- Routing in NextJS
+- Getting the auctions won
