@@ -233,3 +233,10 @@ Sec08 - Adding the client side app
 - Using Zustand for state management
     - https://docs.pmnd.rs/zustand/getting-started/introduction
 - Refactoring our code to use the zustand state
+- Adding a search bar
+- Adding the search functionality 
+- Adding a reset to the search function
+- Adding the sorting functionality
+- Adding the filtering functionality
+- Adding a component to display when zero results
+
