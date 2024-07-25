@@ -257,3 +257,9 @@ Sec09: Client side identity with NextAuth (AuthJS)
         - https://next-auth.js.org/getting-started/typescript#module-augmentation
         - creteing [next-auth.d.ts]
 - Populating the User actions dropdown
+- Protecting routes
+    - https://next-auth.js.org/configuration/nextjs#middleware
+- Testing API authentication
+- Getting the access token to use to authenticate to our resource server
+    - https://next-auth.js.org/tutorials/securing-pages-and-api-routes#using-gettoken
+
