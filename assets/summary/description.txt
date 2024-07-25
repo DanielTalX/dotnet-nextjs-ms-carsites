@@ -240,3 +240,15 @@ Sec08 - Adding the client side app
 - Adding the filtering functionality
 - Adding a component to display when zero results
 
+
+Sec09: Client side identity with NextAuth (AuthJS)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Introduction
+- Before we begin
+- Installing Next Auth into our client app
+    - https://next-auth.js.org/
+- Adding the login functionality
+    - web-app -> inspect -> Application -> Cookies -> delete all Cookies
+    - identity-svc url -> inspect -> Application -> Cookies -> delete all Cookies
+- Getting the session details in the client
+    - adding env.local file so NextAuth could decrept token
