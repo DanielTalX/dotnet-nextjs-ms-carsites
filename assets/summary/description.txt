@@ -273,3 +273,11 @@ Sec10: CRUD operations in the client app
     - https://react-hook-form.com/get-started
 - Creating a reusable text input
 - Creating a reusable date input
+- Creating a fetch wrapper
+- Adding the create auction server action
+    - free images: https://pixabay.com/
+- Adding react hot toast to display notifications if something goes wrong
+- Adding the auction details page content
+- Adding the edit auction page
+- Adding the delete auction functionality
+
