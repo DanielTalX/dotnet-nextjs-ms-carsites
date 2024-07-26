@@ -281,3 +281,20 @@ Sec10: CRUD operations in the client app
 - Adding the edit auction page
 - Adding the delete auction functionality
 
+
+Sec11: Creating the bid service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Introduction
+- Creating the Bid Service
+    - [Carsties] dotnet new webapi -o src/BiddingService --use-controllers
+    - [Carsties] dotnet sln add src/BiddingService
+    - clean the project as earlier
+    - add nuget packages from gallery:
+        - MongoDB.Entities @Đĵ ΝιΓΞΗΛψΚ
+        - Microsoft.AspNetCore.Authentication.JwtBearer @Microsoft
+        - MassTransit.RabbitMQ @Chris Patterson
+    - [BiddingService] verify everything is ok by: dotnet build
+    - [BiddingService] run by: dotnet watch
+- Adding the models to the Bid Service
+- Adding an API Controller for the bids
+- Adding the get bids endpoint
