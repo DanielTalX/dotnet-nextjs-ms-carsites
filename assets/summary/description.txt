@@ -269,3 +269,7 @@ Sec10: CRUD operations in the client app
 - Introduction
 - Routing in NextJS
 - Getting the auctions won
+- Creating an Auction form
+    - https://react-hook-form.com/get-started
+- Creating a reusable text input
+- Creating a reusable date input
