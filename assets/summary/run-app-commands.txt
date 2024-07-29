@@ -3,3 +3,5 @@
 - [SearchService] dotnet watch
 - [IdentityServer] dotnet watch
 - [GatewayService] dotnet watch
+- [BiddingService] dotnet watch
+- [web-app] npm run dev

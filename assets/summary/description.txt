@@ -293,8 +293,18 @@ Sec11: Creating the bid service
         - MongoDB.Entities @Đĵ ΝιΓΞΗΛψΚ
         - Microsoft.AspNetCore.Authentication.JwtBearer @Microsoft
         - MassTransit.RabbitMQ @Chris Patterson
+        - AutoMapper.Extensions.Microsoft.DependencyInjection @Jimmy Bogard
     - [BiddingService] verify everything is ok by: dotnet build
     - [BiddingService] run by: dotnet watch
 - Adding the models to the Bid Service
 - Adding an API Controller for the bids
 - Adding the get bids endpoint
+- Adding the auction created consumer
+    - [BiddingService] dotnet add reference ../../src/Contracts
+- Testing the bid functionality in Postman
+- Adding the DTOs and Automapper
+- Adding a producer for the BidPlaced
+- Adding a Background service for the auction finished event
+   - We will have a singleton background service that polls the database for auctions that
+   have ended but not been marked as finished. For each of these, it will send an event on the service bus.
+   This service will run continuously from application startup until shutdown.
