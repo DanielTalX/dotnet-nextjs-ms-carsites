@@ -365,3 +365,7 @@ Sec13: Adding the bids/notifications to the client
 - Updating the Auction cards with the current high price
 - Getting the bids for an auction
 - Creating a bid item
+- Creating a bid store
+- Creating a bid form
+- Updating the error handling
+- Adding conditionals to the form and testing
