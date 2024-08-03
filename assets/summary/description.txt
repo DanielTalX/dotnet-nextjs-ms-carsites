@@ -351,3 +351,9 @@ Sec12: Adding a SignalR service
     - clean the project
     - add packages from nuget gallery:
         - MassTransit.RabbitMQ @Chris Patterson
+- Adding a SignalR Hub
+- Adding the Consumers
+- Adding CORS support to the Gateway
+- Dockerising the NotificationService
+- Updating the Docker compose file
+
