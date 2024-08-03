@@ -357,3 +357,11 @@ Sec12: Adding a SignalR service
 - Dockerising the NotificationService
 - Updating the Docker compose file
 
+
+Sec13: Adding the bids/notifications to the client
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Introduction
+- Refactoring the auctions into a zustand store
+- Updating the Auction cards with the current high price
+- Getting the bids for an auction
+- Creating a bid item
