@@ -340,3 +340,14 @@ Sec11: Creating the bid service
 - Updating the Gateway service
 - Dockerising the BidService
 
+
+Sec12: Adding a SignalR service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Introduction
+- Creating the Notification service
+    - [Carsties] dotnet new web -o src/NotificationService
+    - [Carsties] dotnet sln add src/NotificationService
+    - [NotificationService] dotnet add reference ../../src/Contracts
+    - clean the project
+    - add packages from nuget gallery:
+        - MassTransit.RabbitMQ @Chris Patterson
