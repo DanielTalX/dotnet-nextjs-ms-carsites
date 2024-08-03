@@ -308,3 +308,35 @@ Sec11: Creating the bid service
    - We will have a singleton background service that polls the database for auctions that
    have ended but not been marked as finished. For each of these, it will send an event on the service bus.
    This service will run continuously from application startup until shutdown.
+- What is gRPC?
+    - gRPC is a high-performance, open-source framework developed by Google for remote procedure calls (RPC).
+    It enables communication between client and server applications, often running on different machines,
+    in a streamlined and efficient manner.
+    - When to Use gRPC:
+        Microservices Communication: When high performance and low latency are critical, especially for internal service-to-service communication.
+        Real-Time Communication: When you need bidirectional streaming or continuous data streams.
+        Multi-Language Environments: When your system involves multiple languages and you want to enforce strong typing and schema consistency.
+        Mobile and IoT: When you need efficient, low-bandwidth communication.
+- Adding gRPC (server)
+    - https://learn.microsoft.com/en-us/aspnet/core/grpc/aspnetcore?view=aspnetcore-8.0&tabs=visual-studio-code
+    - add nuget package from gallery: [AuctionService] Grpc.AspNetCore @The gRPC Authors
+    - Define the Service: Write a .proto file [auctions.proto] with service and message definitions.
+        - [AuctionService.csproj] update
+        - [appsettings.Development.json] update - custom settings to cummunicate over http insread https
+    - Generate Code: Run protoc to generate code.
+        - aftet write .proto file [auctions.proto], run dotnet build to generate the code
+            you can see the code in [AuctionService/obj/Debug/protos]
+    - Implement Server: Implement the server-side logic in the chosen language 
+        - [AuctionService/Services/GrpcAuctionService]
+    - Implement Client: Use the generated client code to make requests to the server.
+        - next in [BiddingService]
+- Adding a gRPC client
+    - add nuget package from gallery: 
+        - [BiddingService] Google.Protobuf @Google Inc.
+        - [BiddingService] Grpc.Tools @The gRPC Authors
+        - [BiddingService] Grpc.Net.Client @The gRPC Authors
+    - as in [AuctionService] but also [BiddingService/Services/GrpcAuctionClient]
+    - [BidsController] make grpc request to get the auction
+- Updating the Gateway service
+- Dockerising the BidService
+

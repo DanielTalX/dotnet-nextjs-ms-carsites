@@ -9,6 +9,8 @@
     - docker compose down
 - build service
     - docker compose build search-svc
+- build all iamges in docker-compose.yml
+    - docker compose build
 * Sec07
 - Stop container on current dir if there is a docker-compose.yml
     - docker-compose down  
