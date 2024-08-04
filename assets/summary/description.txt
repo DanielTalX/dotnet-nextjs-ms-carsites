@@ -369,3 +369,10 @@ Sec13: Adding the bids/notifications to the client
 - Creating a bid form
 - Updating the error handling
 - Adding conditionals to the form and testing
+- Adding SignalR to the client app
+- Adding the new bid to SignalR
+- Adding a toast for an auction created
+- Adding a toast for an auction finished event
+- Disabling the auction finished form when the auction finishes
+- Preventing low bids
+
