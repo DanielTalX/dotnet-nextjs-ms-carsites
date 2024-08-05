@@ -484,3 +484,4 @@ source/
 assets/summary/sections/*/*.png
 assets/summary/sections/*/*.jpeg
 assets/summary/sections/*/*.jpg
+devcerts/

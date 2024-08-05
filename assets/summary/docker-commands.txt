@@ -22,3 +22,6 @@
     - sudo lsof -i -P -n | grep <port number>
 - kill process
     - kill <process id>
+* Sec14
+- Lists all the networks in docker (the Engine daemon knows about)
+    - docker network ls

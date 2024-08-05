@@ -403,3 +403,27 @@ Sec14: Publishing the app to production (locally)
         - in web-app image set extra_hosts to the static ip
     - docker compose down + docker compose up -d + identity-svc -> click inspect -> see the static ip address
     - Fixing [IdentityServer.Config.cs] to use ClientApp url from config file instead of hardcoded url
+- Adding an ingress to Docker compose
+    - add to hosts: "127.0.0.1 identity-svc.carsties.com app.carsties.com api.carsties.com"
+    - docker image: nginxproxy/nginx-proxy - Automated nginx proxy for Docker containers using docker-gen
+        - https://hub.docker.com/r/nginxproxy/nginx-proxy
+    - add nginx-proxy image
+    - remove the ports section from all services (identity, gateway, web-app) that access from external to internal
+        and add instead "VIRTUAL_HOST" with the relavat value
+    - add to the web-app image "VIRTUAL_PORT"
+- Adding SSL to the ingress
+    - install mkcert tool - mkcert is a simple tool for making locally-trusted development certificates. It requires no configuration.
+        - https://github.com/FiloSottile/mkcert
+        - check installation by mkcert -h
+    - mkcert -install
+    - [Carsties] cd devcerts/
+    - [devcerts] mkcert -key-file carsties.com.key -cert-file carsties.com.crt app.carsties.com api.carsties.com identity-svc.carsties.com
+    - [docker-compose.yml] - add to nginx-proxy image: 
+        - ports: 443:443
+        - volumes: ./devcerts:/etc/nginx/certs
+- Final app cleanup and resolving SignalR issue
+    - [SignalRProvider.tsx] - read the NEXT_PUBLIC_NOTIFY_URL from env.local file instead of docker-compose.yml
+        so the solve this check node env.
+        - https://github.com/vercel/next.js/discussions/17641
+    - [web-app] for performance: npm i sharp
+
