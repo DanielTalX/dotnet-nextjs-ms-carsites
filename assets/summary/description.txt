@@ -376,3 +376,12 @@ Sec13: Adding the bids/notifications to the client
 - Disabling the auction finished form when the auction finishes
 - Preventing low bids
 
+
+Sec14: Publishing the app to production (locally)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Introduction
+- Preparing the client app
+    - https://stackoverflow.com/questions/77637651/authoptions-is-not-a-valid-route-export-field
+- Creating the Dockerfile for nextjs
+    - add "PUBLIC" to env variable so the clinet app side can access it
+        NEXT_PUBLIC_NOTIFY_URL=http://gateway-svc/notifications
