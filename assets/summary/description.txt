@@ -385,3 +385,21 @@ Sec14: Publishing the app to production (locally)
 - Creating the Dockerfile for nextjs
     - add "PUBLIC" to env variable so the clinet app side can access it
         NEXT_PUBLIC_NOTIFY_URL=http://gateway-svc/notifications
+- Fixing the identity server issues in docker compose
+    - define: NEXTAUTH_URL=http://localhost:3000
+    - define: NEXTAUTH_URL_INTERNAL=http://web-app:3000
+    - add to hosts: "127.0.0.1 identity-svc.carsties.com"
+    - define: ID_URL=http://identity-svc.carsties.com
+    - docker extension -> identity-svc -> click inspect -> see the dynamic ip address
+    - define: extra_hosts in web-app image & define ports 80:80 in identity-svc image
+- Giving the Identity Server a static ip address
+    - Lists all the networks in docker (the Engine daemon knows about)
+        docker network ls
+    - define our costom network in [docker-compose.yml] by:
+        - adding networks section above
+        - adding in each image networks section:
+            - default ip by: custom with nothing
+            - in identity-svc define the static ip by: ipv4_address
+        - in web-app image set extra_hosts to the static ip
+    - docker compose down + docker compose up -d + identity-svc -> click inspect -> see the static ip address
+    - Fixing [IdentityServer.Config.cs] to use ClientApp url from config file instead of hardcoded url
