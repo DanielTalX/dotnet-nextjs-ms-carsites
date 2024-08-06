@@ -427,3 +427,41 @@ Sec14: Publishing the app to production (locally)
         - https://github.com/vercel/next.js/discussions/17641
     - [web-app] for performance: npm i sharp
 
+
+Sec15: Appendix A - Testing
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Intro to Appendix A - Testing
+    - The Testing Pyramid is a concept in software testing that emphasizes the importance of having
+        a balanced approach to testing by prioritizing different types of tests in a hierarchical manner.
+    - Unit Tests (Base of the Pyramid)
+        - Definition: Tests that validate individual components or functions in isolation.
+        - Purpose: To ensure that each part of the code works as expected.
+        - Characteristics: Fast to execute, high coverage, easy to write and maintain.
+        - Quantity: Should have the largest number of tests.
+    - Integration Tests (Middle of the Pyramid):
+        - Definition: Tests that verify the interactions between different components or systems.
+        - Purpose: To ensure that combined parts of the application work together correctly.
+        - Characteristics: Slower than unit tests, moderate coverage, more complex to set up and maintain.
+        - Quantity: Fewer than unit tests but more than end-to-end tests.
+    - End-to-End Tests (Top of the Pyramid):
+        - Definition: Tests that validate the complete system, from the user interface to the backend services.
+        - Purpose: To ensure that the entire application works as a whole, mimicking real user scenarios.
+        - Characteristics: Slowest to execute, lowest coverage, hardest to write and maintain.
+        - Quantity: Should have the fewest number of tests.
+- The simplest unit test possible
+    - [Carsties] dotnet new xunit -o tests/AuctionService.UnitTests
+    - [Carsties] dotnet sln add tests/AuctionService.UnitTests
+    - [AuctionService.UnitTests] dotnet add reference ../../src/AuctionService
+    - [Carsties] dotnet build
+- Reviewing the code in the Auction controller and what we are testing
+    - cuttrently the [AuctionsController] is not testable beacuse the Dbcontext so...
+- Creating an Auction Repository and interface
+- Refactoring the Auctions controller to use the repository
+- Mocking things
+    - add nuget packages from gallery: 
+        - Moq @Daniel Cazzulino, kzu
+        - AutoFixture @Mark Seemann,AutoFixture
+- Unit testing the GET methods
+- Unit testing the POST request
+    - add [Utils.Helpers] in order to have user claims
+- Challenge + Solution - Practicing creating unit tests for the other controller methods
