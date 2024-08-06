@@ -465,3 +465,21 @@ Sec15: Appendix A - Testing
 - Unit testing the POST request
     - add [Utils.Helpers] in order to have user claims
 - Challenge + Solution - Practicing creating unit tests for the other controller methods
+- Integration testing setup
+    - [Carsties] dotnet new xunit -o tests/AuctionService.IntegrationTests
+    - [Carsties] dotnet sln add tests/AuctionService.IntegrationTests
+    - [AuctionService.IntegrationTests] dotnet add reference ../../src/AuctionService
+    - add nuget packages from gallery: 
+        - Microsoft.AspNetCore.Mvc.Testing @Microsoft
+        - Testcontainers.PostgreSql @Andre Hofmeister and contributors
+        - WebMotions.Fake.Authentication.JwtBearer @Dominique St-Amand
+    - Setting up a reusable test web application factory for integration testing - 
+        In the [AuctionService.IntegrationTests] project, create a Fixtures folder.
+        Inside, add a class called CustomWebAppFactory which will create a test instance of the web application.
+        This allows for the addition of test services and reuse across multiple tests.
+        The CustomWebAppFactory inherits from WebApplicationFactory from ASP.NET Core MVC testing,
+        enabling the creation of high-value integration tests that provide meaningful feedback and run relatively quickly.
+        Next, we'll see how to add test services, such as a fake database, service bus, and authentication,
+        to write high-value tests for our application.
+- Setting up a Custom web application factory for integration testing
+- Adding test data to the DB
