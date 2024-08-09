@@ -519,3 +519,68 @@ Sec16: Appendix B - Publishing to Kubernetes (locally)
         - [Carsties] docker compose down + docker compose build
 - Adding a GitHub action to push our Identity Server image to Docker hub
     - https://hub.docker.com/
+- Deploying our IdentityServer to a Digital Ocean server
+    - https://www.digitalocean.com/
+    - [digitalocean] create a New Project: CarstiesApp
+        - create a cloud server - that's what Identity Server is going to run on
+            - It'll allow us to create a server that already has Docker running on it, and we're going to run this
+            using Docker compose. Now I know I mentioned that we wouldn't normally use Docker compose for production,
+            but I want to think of identity as something that's not microservices application, 
+            it's outside of that and we're deploying it so that we can connect to it from our Kubernetes cluster and
+            from the client browser without things going pear shaped as they have been.
+            And we don't have the workarounds that we do inside Docker compose either available in Kubernetes.
+            - [digitalocean/CarstiesApp] - Create -> Droplets (which is just a virtual server effectively)
+                - pick location 
+                - choose an image -> os marketplace -> Docker 23.06 on Ubunto 22.04
+                - CPU options - the cheapest one
+                - choose authentication method - password
+                - copy the ip => [carsties-identity-ip]
+            - We do want this to run over Https and for that we do need a domain name to achieve that.
+                - https://www.godaddy.com/en-il
+                - [godaddy] 
+                    - create a domain
+                    - DNS management -> DNS Records -> (Type) A, (Name) carsties-identity, (Value) the ip, (TTL)
+        - connect to [carsties-identity-ip]
+            - [local terminal]: ssh root@[carsties-identity-ip]
+- Configuring the Linux server to host the identity server
+    - [carsties-identity-ip/terminal] - mkdir /var/app
+    - [carsties-identity-ip/terminal/var/app] - sudo nano docker-compose.yml
+        - copy the text from [assets/snippets/deploy/dc-identity.txt] (after replacing all 'CHANGEME' with correct value)
+            and paste it on the remote, save by CTRL+X and then press Y.
+    - we should just be able to run docker compose and get our services running.
+        But we want this to run as a service so that if our Linux server restarts, then it automatically runs this command.
+        So we're going to create a service inside Linux to do this:
+        - [carsties-identity-ip/terminal] sudo nano /etc/systemd/system/carsties-docker-identity-svc.service
+            - copy the text from [assets/snippets/deploy/svc-docker-identity.txt] and paste it on the remote, save by CTRL+X and then press Y.
+        - [carsties-identity-ip/terminal] sudo systemctl enable carsties-docker-identity-svc.service
+        - [carsties-identity-ip/terminal] - in order to see logs: systemctl restart systemd-journald
+        - [carsties-identity-ip/terminal] sudo systemctl status carsties-docker-identity-svc.service
+        - [carsties-identity-ip/terminal] sudo systemctl start carsties-docker-identity-svc.service
+        - [carsties-identity-ip/terminal] - ubunto firewall to allow ports 80 and 443: 
+            - sudo ufw allow 80
+            - sudo ufw allow 443
+        - [carsties-identity-ip/terminal] the list of the docker containers that running: docker ps
+        - [carsties-identity-ip/terminal] see logs - journalctl -u carsties-docker-identity-svc.service
+________
+- Creating the first Kubernetes manifest for a deployment
+    - VSC Extension - Kubernetes Microsoft
+    - createing [infra/k8s/postgress-depl.yml]
+    - [k8s] k8s apply -f postgres-depl.yml
+- Adding a persistent volume claim
+    - createing [infra/k8s/local-pvc.yml]
+    - [k8s] k8s apply -f local-pvc.yml
+    - [k8s] k8s apply -f postgres-depl.yml
+- Adding a load balancer to allow us to connect to the postgres deployment
+    - adding load balancer service to [postgres-depl.yml] that we will use this as a kind of window
+        into k8s so that we can access this service over this port from local host.
+    - [k8s] k8s apply -f postgres-depl.yml
+    - [k8s] k8s get services
+- Adding a cluster ip our services can use
+    - adding  a cluster ip service to [postgres-depl.yml]. Our services are going to need to speak to each other
+        inside of k8s. And in order for them to speak to each other, we need to give them a cluster IP address.
+    - [k8s] k8s apply -f postgres-depl.yml
+- Creating a deployment for RabbitMQ & Mongodb
+    - [k8s] k8s apply -f local-pvc.yml (and rabbit and mongo..)
+    - http://localhost:15672 - Username & Password: rabbit
+    - [k8s] k8s get services/pods/deployments
+

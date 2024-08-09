@@ -1,0 +1,8 @@
+*sec16
+- [k8s] k8s apply -f local-pvc.yml
+- [k8s] k8s apply -f postgres-depl.yml
+
+- [k8s] k8s get pods
+- [k8s] k8s get deployments
+- [k8s] k8s describe pod <pod-hash-name>
+- [k8s] k8s get services
