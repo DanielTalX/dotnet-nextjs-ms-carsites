@@ -483,3 +483,8 @@ Sec15: Appendix A - Testing
         to write high-value tests for our application.
 - Setting up a Custom web application factory for integration testing
 - Adding test data to the DB
+- Creating an integration test for the GET method
+- Creating an integration test for the POST request
+    - adding a fake auth  jwt
+- Challenge + solution - Practicing creating integration tests for the other methods
+- Testing the Service bus
