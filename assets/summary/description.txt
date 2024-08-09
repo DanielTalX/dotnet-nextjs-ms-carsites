@@ -488,3 +488,12 @@ Sec15: Appendix A - Testing
     - adding a fake auth  jwt
 - Challenge + solution - Practicing creating integration tests for the other methods
 - Testing the Service bus
+- Using Collection fixtures to share the DB across test classes
+    - We want to make sure our integration tests run as fast as they possibly can do.
+        And the way that we achieve that is by not using a different database server for each different test class.
+        Now we've got two test classes - AuctionControllerTests & AuctionBusTests.
+        Both need access to the database for what they're doing and both of them are going to start up a database
+        server. That's what we want to avoid and now we are going to solve that by createing 
+        a SharedFixture class that inherits from ICollectionFixture<CustomWebAppFactory>.
+    - fix docker files to include tests
+
