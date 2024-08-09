@@ -28,3 +28,8 @@
 - create a web for a gateway service
     - [Carsties] dotnet new web -o src/GatewayService
     - [Carsties] dotnet sln add src/GatewayService
+* Sec15
+- setup UnitTests
+    - [Carsties] dotnet new xunit -o tests/AuctionService.UnitTests
+    - [Carsties] dotnet sln add tests/AuctionService.UnitTests
+    - [AuctionService.UnitTests] dotnet add reference ../../src/AuctionService

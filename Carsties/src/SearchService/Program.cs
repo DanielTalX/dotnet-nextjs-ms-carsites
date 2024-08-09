@@ -63,3 +63,5 @@ static IAsyncPolicy<HttpResponseMessage> GetPolicy()
         .HandleTransientHttpError()
         .OrResult(msg => msg.StatusCode == HttpStatusCode.NotFound)
         .WaitAndRetryForeverAsync(_ => TimeSpan.FromSeconds(10));
+
+public partial class Program { } // for SearchService.IntegrationTests

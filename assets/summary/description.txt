@@ -496,4 +496,13 @@ Sec15: Appendix A - Testing
         server. That's what we want to avoid and now we are going to solve that by createing 
         a SharedFixture class that inherits from ICollectionFixture<CustomWebAppFactory>.
     - fix docker files to include tests
+- SearchService Integration tests setup
+    - [Carsties] dotnet new xunit -o tests/SearchService.IntegrationTests
+    - [Carsties] dotnet sln add tests/SearchService.IntegrationTests
+    - [SearchService.IntegrationTests] dotnet add reference ../../src/SearchService
+    - add nuget packages from gallery: 
+        - AutoFixture @Mark Seemann,AutoFixture
+        - Microsoft.AspNetCore.Mvc.Testing @Microsoft
+        - Mongo2Go
+    - fix docker files to include tests
 
