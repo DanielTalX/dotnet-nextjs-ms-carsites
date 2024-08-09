@@ -1,4 +1,6 @@
 ﻿using IdentityServer;
+using Npgsql;
+using Polly;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -24,9 +26,15 @@ try
     // in production you will likely want a different approach.
     if (true || args.Contains("/seed"))
     {
-        Log.Information("Seeding database...");
-        SeedData.EnsureSeedData(app);
-        Log.Information("Done seeding database. Exiting.");
+        var retryPolicy = Policy
+            .Handle<NpgsqlException>()
+            .WaitAndRetry(5, retryAttempt => TimeSpan.FromSeconds(10));
+
+        retryPolicy.ExecuteAndCapture(() => {
+            Log.Information("Seeding database...");
+            SeedData.EnsureSeedData(app);
+            Log.Information("Done seeding database. Exiting.");
+        });
     }
 
     app.Run();

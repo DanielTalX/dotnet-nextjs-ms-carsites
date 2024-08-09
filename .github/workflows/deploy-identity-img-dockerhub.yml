@@ -1,0 +1,31 @@
+name: deploy-identity-img-dockerhub
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+    paths:
+        - 'Carsties/src/IdentityServer/**'
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: docker/setup-buildx-action@v2
+    - name: Login to docker hub
+      uses: docker/login-action@v2
+      with:
+        # define secrets in github repo => /settings/secrets/actions => new repository secrets
+        # the password should be the tocken from dockerhub -> account settings -> securirty -> new access token [CarstiesDockerhubToken]
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+    - name: Build and push the Docker image
+      uses: docker/build-push-action@v3
+      with:
+        context: .
+        file: Carsties/src/IdentityServer/Dockerfile
+        push: true
+        tags: mydockerid/identity-svc:latest

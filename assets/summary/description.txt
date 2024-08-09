@@ -506,3 +506,16 @@ Sec15: Appendix A - Testing
         - Mongo2Go
     - fix docker files to include tests
 
+
+Sec16: Appendix B - Publishing to Kubernetes (locally)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Intro to Appendix B - Kubernetes
+- No 'depends on' in Kubernetes - using Polly to retry instead
+    - enable k8s in docker desskop
+    - add nuget packages:
+        - [AuctionService, BiddingService, IdentityServer, SearchService] Polly @Michael Wolfenden, App vNext
+        - update program.ms file [AuctionService, BiddingService, IdentityServer, SearchService] to use retry policy
+            on RabbitMQ & db (postgres or mongo).
+        - [Carsties] docker compose down + docker compose build
+- Adding a GitHub action to push our Identity Server image to Docker hub
+    - https://hub.docker.com/
