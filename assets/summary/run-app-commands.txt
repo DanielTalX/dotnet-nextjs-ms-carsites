@@ -1,7 +1,14 @@
-- [Carsties] docker compose up -d
-- [AuctionService] dotnet watch
-- [SearchService] dotnet watch
-- [IdentityServer] dotnet watch
-- [GatewayService] dotnet watch
-- [BiddingService] dotnet watch
-- [web-app] npm run dev
+- Using K8S:
+    - 
+
+- Using docker-compose.yml
+    - [Carsties] docker compose build
+    - [Carsties] docker compose up -d
+
+- Run manually 
+    - [AuctionService] dotnet watch
+    - [SearchService] dotnet watch
+    - [IdentityServer] dotnet watch
+    - [GatewayService] dotnet watch
+    - [BiddingService] dotnet watch
+    - [web-app] npm run dev

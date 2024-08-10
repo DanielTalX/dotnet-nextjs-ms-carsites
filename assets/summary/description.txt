@@ -562,6 +562,7 @@ Sec16: Appendix B - Publishing to Kubernetes (locally)
         - [carsties-identity-ip/terminal] the list of the docker containers that running: docker ps
         - [carsties-identity-ip/terminal] see logs - journalctl -u carsties-docker-identity-svc.service
 ________
+- Creating the infrastructure services deployment:
 - Creating the first Kubernetes manifest for a deployment
     - VSC Extension - Kubernetes Microsoft
     - createing [infra/k8s/postgress-depl.yml]
@@ -583,4 +584,8 @@ ________
     - [k8s] k8s apply -f local-pvc.yml (and rabbit and mongo..)
     - http://localhost:15672 - Username & Password: rabbit
     - [k8s] k8s get services/pods/deployments
+- Creating the services deployment
+    - auction, search, bid, notification, gateway
+    - investigate how to use config maps or helm instead of env variables
+- Creating the client app deployment
 
