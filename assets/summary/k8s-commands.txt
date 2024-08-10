@@ -6,6 +6,7 @@
 - [k8s] k8s get deployments
 - [k8s] k8s describe pod <pod-hash-name>
 - [k8s] k8s get services
+- [k8s] k8s get namespaces
 
 - [k8s] k8s delete -f ingress-svc.yml
 - [k8s] k8s rollout restart development webapp

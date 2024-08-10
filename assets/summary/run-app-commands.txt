@@ -15,6 +15,18 @@ kubectl apply -f ingress-svc.yml
 
 - [k8s] k8s delete -f ingress-svc.yml
 
+kubectl delete -f .
+kubectl apply -f .
+
+kubectl apply -f local-pvc.yml
+kubectl apply -f postgress-depl.yml -f mongo-depl.yml -f rabbit-depl.yml
+kubectl apply -f auction-depl.yml -f identity-depl.yml -f gateway-depl.yml -f bid-depl.yml -f notify-depl.yml -f search-depl.yml
+kubectl apply -f webapp-depl.yml -f ingress-svc.yml
+
+# https://stackoverflow.com/questions/70860152/how-to-delete-a-ingress-controller-on-kubernetes
+kubectl delete all  --all -n ingress-nginx
+
+
 - Using docker-compose.yml
     - [Carsties] docker compose build
     - [Carsties] docker compose up -d

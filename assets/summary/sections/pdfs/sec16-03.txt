@@ -1,0 +1,129 @@
+The approach that I'm going to take is to enable Kubernetes via Docker desktop, and that is going to
+give us what's referred to as a Kubernetes cluster with a single node.
+And the node is really just a virtual machine that's capable of running containers.
+And we've been using containers throughout the development of our application because each one of our
+services is dockerized and is running as a container.
+So we're going to go for this approach.
+
+Now we're going to run everything pretty much how it was, but this time it's going to be inside a Kubernetes
+cluster, albeit a cluster with a single node.
+And also in this section, I've got to take the approach to move identity outside of the cluster.
+So I've needed to move identity server outside of our cluster.
+Now that is more normal.
+It would not be considered normal to have this running alongside our individual services that make up
+our microservices. 
+App identity is typically something that would live outside of there and we don't have the same hacky
+little tools that I used with Docker compose to get this working inside its host, and that's due to
+the communication between the client browser, identity server and the web app that we're running inside
+this cluster as well.
+
+So the approach I'm going to take is to run this on a digital ocean virtual server that does cost money.
+There's no avoiding that when we get to this kind of the stage of the course.
+So this part is optional.
+Please remember that and you don't have to follow along with what I'm doing here.
+Really just demonstrating how you can get this stuff running inside what is a Kubernetes cluster and
+
+what is Kubernetes?
+Well, let's take a look.
+Kubernetes or K80s. It's given its name because of the number of characters between Kubernetes.
+It was originally developed by Google, but now it's an open source platform that automates Linux container operations.
+And each one of our services is a container and Kubernetes runs on a Linux server and it automates the
+containers or the container operations inside that Linux server or servers.
+It eliminates many of the manual processes involved in deploying and scaling containerized applications.
+So it's basically a system, an orchestration system where we tell it what we want and it goes ahead
+and does it and it does it very well and very efficiently.
+So we can cluster together groups of hosts or virtual machines running Linux containers and Kubernetes
+helps us easily and efficiently manage those clusters.
+And a lot of the key words in Kubernetes is automation.
+Really, it helps us do something automatically.
+We tell Kubernetes what we want, how our desired state of our application should look by supplying
+it with manifest files, and then it goes along and does its thing and runs our containerized applications
+inside that Kubernetes cluster.
+It does have some tricks up its sleeve.
+It provides service, discovery and load balancing, and we expose our containers inside a Kubernetes
+cluster using a DNS name, which is easy for us to use rather than an IP address.
+And it also and if traffic to a container is high, then Kubernetes is going to load balance and distribute
+the traffic so that the deployment is stable.
+It also allows for storage orchestration and it allows us to automatically mount a storage system of
+our choice.
+
+We're going to be using the file system, but a public cloud provider storage option is also viable as well.
+It also automates rollouts and rollbacks.
+We tell Kubernetes what our desire is for a particular service and it will go about the business of
+changing the actual states to the desired states at a controlled rate.
+It has self-healing.
+If one of our containers fails, it's automatically going to spin up a new container in its place.
+And it also provides us with secrets and configuration management so we have somewhere safe to store
+our secret information.
+
+So there's a fair bit of terminology, unfortunately, that comes along with Kubernetes.
+And I'm going to mention these as we go about the business of getting our app into Kubernetes.
+So I'm very briefly going to run through what we're going to talk about here.
+The big one is the Kubernetes cluster.
+This is what runs our nodes and we can have one node or a thousand nodes or more and Kubernetes.
+TS is going to kind of efficiently run and deploy our services onto one or more of these nodes, depending
+on how many instances of our different services that we want.
+And there's also a master node that controls the nodes.
+
+Now a node is basically a virtual machine or a physical machine.
+It can be either that is capable of running containerized applications and Kubernetes is the orchestrator
+that decides where these services on which nodes should be running, depending on how many resources
+that node has available and the smallest units inside Kubernetes is a pod and our pod and containers
+in our example is going to have a kind of 1 to 1 relationship.
+But a pod can have more than one container, but we're going to go for a 1 to 1.
+Each container is going to run inside its own pod, even though a pod can have more than one container,
+although I don't think that's atypical.
+I think that would be unusual.
+
+And we're going to go for one pod, one container, and a container is going to run our containerized
+service.
+So the auction service or the search service, for example.
+Also we can have services running inside Kubernetes as well.
+And so let's our services can reach each other.
+
+We give them a service that is a cluster IP.
+So this is where service discovery comes in.
+So we would say that our auction service has a cluster IP and then other services can find that service
+using its cluster IP.
+So in this example of a Kubernetes architecture, let's say for example, this was Docker desktop that
+we were running this on.
+And actually that's kind of a lie because Docker desktop cannot have more than one node.
+It only has a single node Kubernetes cluster, but we'll have our multiple pods that run our containers
+inside our node and they are given a cluster IP.
+
+Now our auction service can find our search service by using its cluster IP name.
+And that's how these services communicate with each other internally.
+Externally, we'd need a different service to get to our containers running inside Kubernetes.
+We can use something called a load balancer or there's something else that I'm not actually going to
+demonstrate called a node port that would allow us external access into our cluster.
+But later on we're going to be using a load balancer to provide the ingress for our cluster.
+Now we tell Kubernetes what we want to deploy by using manifest files and we need to create several
+of these.
+And really this is just to give you a brief anatomy of a manifest file before we go and create them,
+because there are some similarities with a different manifest that we're going to create.
+And we start off with the API version.
+This is where we specify the version of the Kubernetes API we are using, and this is kind of telling
+Kubernetes which version of the rule book we're playing by.
+We give Kubernetes a kind.
+The default is pod, so you will not see me using the kind when it comes to creating a manifest file
+for a deployment, because that's going to be its default.
+In fact, we're going to cheat a little bit.
+We're going to add an extension into VS code that's going to give us some help with creating these manifest
+files.
+They're annoying to type out by hand and we'll use a Kubernetes extension to help us do it.
+Each one of these manifest needs to have some metadata and we need to give this a name.
+We give our resource a name and give it some labels and some annotations.
+And then we have the spec and this is the one where we define our container that we're going to run
+inside here.
+And what you'll find is that typically all of these have the same name to describe them.
+We don't need to invent all these different names.
+As per this example, we'll typically give them all the same name because our pod is only going to have
+a single container.
+And then we specify the image, the Docker image that we want to run inside this container that's inside
+this pod, and a tool that you're going to become very familiar with as we go about the business of
+doing this is going to be kubectl.
+This is how we manage Kubernetes.
+It is a command line tool.
+We do not have a GUI to manage this stuff.
+And if you're not a big fan of the command line or the terminal, sorry about this, but this is how
+we do Kubernetes and how we're going to be doing it in this section.

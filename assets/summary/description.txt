@@ -619,3 +619,4 @@ ___
     - [carsties-identity-ip/terminal] - pull the latest iamge of identity-svc from !dockerhub! - docker pull mydockerid/identity-svc
     - [carsties-identity-ip/terminal] - docker compose up -d
     - check the login success
+
