@@ -1,5 +1,19 @@
-- Using K8S:
-    - 
+- Using K8S: (not working)
+kubectl apply -f local-pvc.yml
+kubectl apply -f postgress-depl.yml
+kubectl apply -f mongo-depl.yml
+kubectl apply -f rabbit-depl.yml
+
+kubectl apply -f auction-depl.yml
+kubectl apply -f identity-depl.yml
+kubectl apply -f gateway-depl.yml
+kubectl apply -f bid-depl.yml
+kubectl apply -f notify-depl.yml
+kubectl apply -f search-depl.yml
+kubectl apply -f webapp-depl.yml
+kubectl apply -f ingress-svc.yml
+
+- [k8s] k8s delete -f ingress-svc.yml
 
 - Using docker-compose.yml
     - [Carsties] docker compose build

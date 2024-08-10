@@ -6,3 +6,46 @@
 - [k8s] k8s get deployments
 - [k8s] k8s describe pod <pod-hash-name>
 - [k8s] k8s get services
+
+- [k8s] k8s delete -f ingress-svc.yml
+- [k8s] k8s rollout restart development webapp
+
+
+K8s World
+~~~~~~~~~
+- Print out information about all of the running pods
+kubectl get pods
+
+- Execute the given command in a running pod
+kubectl exec -it [pod_name] [cmd]
+
+- Print out logs from the given pod
+kubectl logs [pod_name]
+
+- Deletes the given pod
+kubectl delete pod [pod_name]
+
+- Tells kubernetes to process the config 
+kubectl apply -f [config file name]
+
+- Print out some information about the running pod
+kubectl describe pod [pod_name]
+
+
+Deployment Commands
+~~~~~~~~~~~~~~~~~~~
+- List all the running deployments
+kubectl get deployments
+
+- Print out details about a specific deployment
+kubectl describe deployment [depl name]
+
+- Create a deployment out of a config file
+kubectl apply -f [config file name]
+
+- Delete a deployment
+kubectl delete deployment [depl_name]
+
+- Get a deployment to restart all pods. 
+  Will use latest version of an image if the pod spec has a tag of 'latest'
+kubectl rollout restart deployment [depl_name] 

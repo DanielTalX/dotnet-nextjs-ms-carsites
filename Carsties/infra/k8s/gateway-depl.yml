@@ -20,6 +20,7 @@ spec:
             value: https://app.carsties.com
           - name: IdentityServiceUrl
             value: http://identity-svc.carsties-domain.com
+            # value: http://identity-clusterip
 ---
 apiVersion: v1
 kind: Service

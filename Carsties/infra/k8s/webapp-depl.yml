@@ -24,6 +24,7 @@ spec:
             value: http://gateway-clusterip/
           - name: ID_URL
             value: http://identity-svc.carsties-domain.com
+            #value: http://identity-clusterip
         ports:
         - containerPort: 3000
 ---

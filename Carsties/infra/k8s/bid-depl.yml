@@ -26,6 +26,7 @@ spec:
             value: mongodb://root:mongopw@mongo-clusterip
           - name: IdentityServiceUrl
             value: http://identity-svc.carsties-domain.com
+            # value: http://identity-clusterip
           - name: GrpcAuction
             value: http://auction-clusterip:7777
 ---

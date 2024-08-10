@@ -27,6 +27,7 @@ spec:
           - name: IdentityServiceUrl
             # value: https://id.mydockerid.com
             value: http://identity-svc.carsties-domain.com
+            # value: http://identity-clusterip
           - name: Kestrel__Endpoints__Grpc__Protocols
             value: Http2
           - name: Kestrel__Endpoints__Grpc__Url

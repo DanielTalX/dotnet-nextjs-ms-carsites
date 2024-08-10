@@ -588,4 +588,34 @@ ________
     - auction, search, bid, notification, gateway
     - investigate how to use config maps or helm instead of env variables
 - Creating the client app deployment
-
+___
+- Adding an nginx ingress controller for docker-compose
+    - Ingress Controller: The actual implementation that processes the Ingress resource. Examples include NGINX Ingress Controller, Traefik, etc.
+    - Why Use Ingress?
+        - Simplified External Access: Instead of exposing multiple services individually, an Ingress can route all traffic through a single entry point.
+        - Advanced Routing: Ingress allows routing based on domain names, paths, or other rules.
+        - TLS Termination: Ingress controllers can handle SSL/TLS termination, offloading that work from your applications.
+    - https://github.com/kubernetes/ingress-nginx
+    - https://kubernetes.github.io/ingress-nginx/deploy/
+    - https://kubernetes.github.io/ingress-nginx/deploy/#quick-start
+        - choose If you don't have Helm: paste in terminal: 
+        - kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.11.1/deploy/static/provider/cloud/deploy.yaml
+        - see the new namespaces ingress-nginx - [terminal] k8s get namespaces
+        - see the services in ingress-nginx namespace - [terminal] k8s get services --namespace ingress-nginx
+        - create ingress-svc.yml - The file is typically used in Kubernetes to define an Ingress resource.
+            An Ingress resource manages external access to the services within a Kubernetes cluster, usually via HTTP and HTTPS.
+            The Ingress resource provides a way to route external requests to the appropriate services based on the request's hostname or path.
+- Adding SSL to the ingress controller
+    - [Carsties/infra/k8s] create devcerts folder
+    - [Carsties/infra/k8s/devcerts] mkcert -key-file server.key -cert-file server.crt app.carsties.com api.carsties.com
+    - [Carsties/infra/k8s/devcerts] k8s create secret tls carsties-app-tls --key server.key --cert server.crt
+    - [Carsties/infra/k8s/devcerts] k8s get secrets
+    - [Carsties/infra/k8s/ingress-svc.yml] - add under spec section: ingressClassName and tls sections.
+- Fixing Identity Server issues
+    - when we try to login there is a (redirect) error to solve this update [IdentityService/HostingExtensions.cs]
+    - docker build + pulish the new version of identity-svc image to dockerhub.com
+    - connect to the remote identity vm - [local-terminal]: ssh root@[carsties-identity-ip]
+    - [carsties-identity-ip/terminal] - cd /var/app
+    - [carsties-identity-ip/terminal] - pull the latest iamge of identity-svc from !dockerhub! - docker pull mydockerid/identity-svc
+    - [carsties-identity-ip/terminal] - docker compose up -d
+    - check the login success

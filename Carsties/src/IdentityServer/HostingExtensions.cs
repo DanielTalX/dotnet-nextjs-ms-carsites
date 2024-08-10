@@ -1,4 +1,5 @@
 using Duende.IdentityServer;
+using Duende.IdentityServer.Services;
 using IdentityServer.Data;
 using IdentityServer.Models;
 using IdentityServer.Services;
@@ -33,6 +34,11 @@ internal static class HostingExtensions
                 {
                     options.IssuerUri = "identity-svc";
                 }
+                else if (builder.Environment.IsProduction())
+                {
+                    options.IssuerUri = "identity-clusterip";
+                    // options.IssuerUri = "https://identity-svc.carsties-domain.com";
+                }
 
                 // see https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/
                 // options.EmitStaticAudienceClaim = true;
@@ -64,6 +70,17 @@ internal static class HostingExtensions
 
         app.UseStaticFiles();
         app.UseRouting();
+
+         if (app.Environment.IsProduction())
+        {
+            app.Use(async (ctx, next) =>
+            {
+                var serverUrls = ctx.RequestServices.GetRequiredService<IServerUrls>();
+                // serverUrls.Origin = "https://identity-svc.carsties-domain.com";
+                await next();
+            });
+        }
+
         app.UseIdentityServer();
         app.UseAuthorization();
         

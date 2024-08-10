@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: identity-svc
+spec:
+  selector:
+    matchLabels:
+      app: identity-svc
+  template:
+    metadata:
+      labels:
+        app: identity-svc
+    spec:
+      containers:
+      - name: identity-svc
+        image: mydockerid/identity-svc
+        imagePullPolicy: Never # pull from local only
+        env:
+          - name: RabbitMq__Host
+            value: rabbit-clusterip
+          - name: RabbitMq__Username
+            value: rabbit
+          - name: RabbitMq__Password
+            value: rabbit
+          - name: ConnectionStrings__DefaultConnection
+            value: Server=postgres-clusterip:5432;User Id=postgres;Password=postgrespw;Database=identity
+          - name: ClientApp
+            value: https://app.carsties.com
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: identity-clusterip
+spec:
+  type: ClusterIP
+  selector:
+    app: identity-svc
+  ports:
+  - port: 80
+    targetPort: 80
+
+# k8s apply -f auctoin-depl.yml
