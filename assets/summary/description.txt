@@ -777,3 +777,23 @@ Sec17: Appendix C - Publising to Kubernetes (Internet)
             - and add service.beta.kubernetes.io/do-loadbalancer-hostname: "workaround.example.com" as it said in digitalocean step5
             - [prod-k8s] kubectl apply -f ingress_nginx_svc.yaml
             - [prod-k8s] kubectl get certificate ==> Now REDAY status is True
+- Finishing up the deployment
+    - [prod-k8s] kubectl get certificate ==> Now REDAY status is True
+    - [prod-k8s] kubectl describe certificate carsties-tls ==> REDAY is True and Name is letsencrypt-staging
+    - [prod-k8s] kubectl get secrets ==> we can see carsties-tls
+    - [prod-k8s] kubectl describe secret carsties-tls 
+    ==> Now that we've confirmed that it's working inside staging, we can go ahead and be confident that what
+        we do in production is also going to work.
+    - create prod-le.yml in [prod-k8s] as staging-le.yml
+    - [prod-le.yml] update the server to https://acme-v02.api.letsencrypt.org/directory
+        - from https://cert-manager.io/docs/tutorials/acme/nginx-ingress/#step-5---deploy-cert-manager
+    - [prod-k8s] kubectl apply -f prod-le.yml
+    - [prod-k8s/ingress-svc.yml] update to use "letsencrypt-prod"
+    - [prod-k8s] kubectl apply -f ingress-svc.yml
+    - [prod-k8s] kubectl get secrets
+    - [prod-k8s] kubectl delete secret carsties-tls
+    - [prod-k8s] kubectl get certificate ==> REDAY is True
+    - [prod-k8s] kubectl describe certificate carsties-tls ==> REDAY is True and Name is letsencrypt-prod
+    - Now the apploication https://app.carsties.store is working!
+    - delete from digitalocean
+

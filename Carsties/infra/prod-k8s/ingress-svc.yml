@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: ingress-svc
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
   labels:
     name: ingress-svc
 spec:
