@@ -1,18 +1,18 @@
-name: deploy-auction
+name: deploy-webapp
 
 on:
   workflow_dispatch:
   push:
     branches: [ "main" ]
     paths:
-        - 'Carsties/src/AuctionService/**'
+        - 'Carsties/frontend/web-app/**'
   pull_request:
     branches: [ "main" ]
 
 env:
-  REGISTRY_IMAGE: mydockerid/auction-svc
-  DOCKERFILE: Carsties/src/AuctionService/Dockerfile
-  DEPLOYMENT_NAME: auction-svc
+  REGISTRY_IMAGE: mydockerid/web-app
+  DOCKERFILE: Carsties/frontend/web-app/Dockerfile
+  DEPLOYMENT_NAME: webapp
 
 jobs:
   build:

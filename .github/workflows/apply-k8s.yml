@@ -1,0 +1,23 @@
+name: apply-k8s
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'Carsties/infra/**'
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install doctl
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }} # github-repo/settings/secrets/actions => new repository secrets
+    - name: Save DigitalOcean kubeconfig
+      run: doctl kubernetes cluster kubeconfig save carsties-cluster
+    - run: kubectl apply -f Carsties/infra/k8s && kubectl apply -f Carsties/infra/prod-k8s

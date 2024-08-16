@@ -637,3 +637,47 @@ Sec17: Appendix C - Publising to Kubernetes (Internet)
     - [infra/k8s] kubectl apply -f dev-k8s
     - [infra] kubectl apply -f k8s/
 - Adding a workflow to deploy our Auction service
+- (Step1) Creating a kubernetes cluster on Digital Ocean
+    - we need kubernetes & load balancer
+    - [digitalocean] create kubernetes (choose nearest locaion, version, cluster capacity (12$ per node), finalize)
+- (Step2+3+4) Connecting to our new kubernetes cluster
+    - install doctl from step2 in [digitalocean]
+    - [digitalocean] create an api token
+    - use the api token to acces doctl
+        - [infra] doctl auth init
+        - [infra] doctl account get
+    - Connecting and mannagin this cluster -> automated: [infra] doctl kubernetes ....
+    - [infra] kubectl config get-context ==> now we have 2 contexts
+    - [infra] kubectl get nodes
+    - to swap between contexts: [infra] kubectl config use-context <context-name>
+    - verify
+    - done
+- Creating a workflow to deploy our manifests automatically
+    - https://github.com/digitalocean/action-doctl
+    - one common use case is retrieving the credentials for a Kubernetes cluster hosted on DigitalOcean for use in a deployment workflow:
+        - doctl kubernetes cluster kubeconfig save carsties-cluster
+    - createing apply-k8s
+- Dev resources and prod resources
+    - Currently in our Kubernetes manifests we've used a load balancer.
+        As unless we want that load balancer to be created on Digital Ocean, 
+        then we really want to remove it from what we're doing here.
+        So we create a new file [infra/dev-8ks/local-lbs.yml] and each one of these load balancers 
+        (rabbit-lb, postgres-lb, mongo-lb, webapp-lb) that we've created.
+    - createing a production secrets
+        - create folder [infra/prod-k8s]
+        - move [ingress-svc.yml] from [k8s] to [dev-k8s]
+        - create [ingress-svc.yml] and [prod-secrets.yml] in [prod-k8s]
+        - add [prod-secrets.yml] to .gitignore
+- Creating the other deployment workflows for the other services
+- Deploying the secrets and the ingress controller
+    - verify the context is to the remote: [infra] kubectl config get-contexts
+    - prod-secrets
+        - beacuse [prod-k8s/prod-secrets.yml] is not in the guthub repo (in .gitignore) we need add this manualy
+        - [infra/prod-k8s] kubectl apply -f prod-secrets.yml
+    - ingress-nginx
+        - https://kubernetes.github.io/ingress-nginx/deploy/#digital-ocean
+        - [infra/prod-k8s] kubectl apply -f https://raw.githubusercontent...
+        - [infra/prod-k8s] kubectl get namespaces
+        - [infra/prod-k8s] kubectl get services --namespace ingress-nginx
+- Deploying our manifests via github actions
+    - [infra/k8s] change "imagePullPolicy" from "Never" (pull from local only) to "Always" (pull from dockerhub only) to each depl file
