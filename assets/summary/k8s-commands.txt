@@ -10,6 +10,8 @@
 
 - [k8s] k8s delete -f ingress-svc.yml
 - [k8s] k8s rollout restart development webapp
+- [k8s] kubectl delete -f k8s/
+*sec17
 
 
 K8s World

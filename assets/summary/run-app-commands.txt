@@ -1,6 +1,6 @@
 - Using K8S: (not working)
 kubectl apply -f local-pvc.yml
-kubectl apply -f postgress-depl.yml
+kubectl apply -f postgres-depl.yml
 kubectl apply -f mongo-depl.yml
 kubectl apply -f rabbit-depl.yml
 
@@ -18,8 +18,11 @@ kubectl apply -f ingress-svc.yml
 kubectl delete -f .
 kubectl apply -f .
 
+kubectl delete -f k8s/
+kubectl apply -f k8s/
+
 kubectl apply -f local-pvc.yml
-kubectl apply -f postgress-depl.yml -f mongo-depl.yml -f rabbit-depl.yml
+kubectl apply -f postgres-depl.yml -f mongo-depl.yml -f rabbit-depl.yml
 kubectl apply -f auction-depl.yml -f identity-depl.yml -f gateway-depl.yml -f bid-depl.yml -f notify-depl.yml -f search-depl.yml
 kubectl apply -f webapp-depl.yml -f ingress-svc.yml
 

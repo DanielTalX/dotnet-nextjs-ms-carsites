@@ -565,7 +565,7 @@ ________
 - Creating the infrastructure services deployment:
 - Creating the first Kubernetes manifest for a deployment
     - VSC Extension - Kubernetes Microsoft
-    - createing [infra/k8s/postgress-depl.yml]
+    - createing [infra/k8s/postgres-depl.yml]
     - [k8s] k8s apply -f postgres-depl.yml
 - Adding a persistent volume claim
     - createing [infra/k8s/local-pvc.yml]
@@ -620,3 +620,20 @@ ___
     - [carsties-identity-ip/terminal] - docker compose up -d
     - check the login success
 
+
+Sec17: Appendix C - Publising to Kubernetes (Internet)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Introduction to Appendix C
+- Kubernetes secrets
+    - [postgres-depl.yml] - update env section to use secretKeyRef
+    - [k8s] kubectl create secret generic postgres-password --from-literal=postgrespwkey=somerandompw
+    - [k8s] kubectl apply -f postgres-depl.yml
+    - [k8s] kubectl delete -f postgres-depl.yml
+    - [k8s] kubectl delete secret postgres-password
+- Using a manifest to create secrets
+    - create [infra/dev-8ks/dev-secrets] to store the secrets
+    - to use the secret inside depl file we will use 'valueFrom' and 'secretKeyRef'
+- Updating the rest of the secrets
+    - [infra/k8s] kubectl apply -f dev-k8s
+    - [infra] kubectl apply -f k8s/
+- Adding a workflow to deploy our Auction service
