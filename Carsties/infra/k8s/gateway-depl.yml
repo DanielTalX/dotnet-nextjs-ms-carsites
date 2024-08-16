@@ -17,7 +17,7 @@ spec:
         imagePullPolicy: Never
         env:
           - name: ClientApp
-            value: https://app.carsties.com
+            value: https://app.carsties.store
           - name: IdentityServiceUrl
             value: http://identity-svc.carsties-domain.com
             # value: http://identity-clusterip

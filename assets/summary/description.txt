@@ -681,3 +681,58 @@ Sec17: Appendix C - Publising to Kubernetes (Internet)
         - [infra/prod-k8s] kubectl get services --namespace ingress-nginx
 - Deploying our manifests via github actions
     - [infra/k8s] change "imagePullPolicy" from "Never" (pull from local only) to "Always" (pull from dockerhub only) to each depl file
+- Checking our deployment
+    - verify the context is to the remote: [infra] kubectl config get-contexts
+    - [infra] k8s get pods
+    - [infra] k8s get deployments
+    - [infra] kubectl get services --namespace ingress-nginx ==> see the external ips!
+    - [infra] k8s logs <auction-svc-...>
+    - [digitalocean] -> networking: we don't have any domains yet.
+        We do need in order to get this application working.
+        But if we take a look at our load balancer, we've got a load balancer assigned.
+        This is for our cluster and it's got an external IP address.
+        Now we need to point something at it so that we can get this functionality working.
+        And to do that, we're going to need a domain name because we can't guarantee this IP address is going to stay the same a bit differently.
+        Identity Server demo earlier because that IP address is static.
+        But these can change if the load balancer goes down, comes back up again.
+        So we do need to do something with a domain name and DNS and we'll take a look at that next.
+- Getting a domain name to point at our Load balancer
+    - [digitalocean] -> CarstiesApp -> resources -> see the lb name ===> CarstiesAppLoadBalancerName
+    - https://docs.digitalocean.com/products/networking/dns/
+    - we need to buy a domain. one option is from https://www.namecheap.com/
+    - https://docs.digitalocean.com/products/networking/dns/getting-started/dns-registrars/
+    - [namecheap->domains->details->carsties.store] set nameservers section to Costom DNS and add ns1.digitalocean.com ns2.digitalocean.com ns3.digitalocean.com
+    - [digitalocean] -> networking -> domains add the carsties.store domain
+        - Create new record:
+            - A =>      [hostname]=@ [wil direct to]=CarstiesAppLoadBalancerName [TTL]=30
+            - CNAME =>  [hostname]=app [wil direct to]=@ [TTL]=43200
+            - CNAME =>  [hostname]=api [wil direct to]=@ [TTL]=43200
+        - we got 2 Hostnames: app.carsties.store, api.carsties.store
+    - [infra/prod-k8s] add/edit ingress-svc.yml
+    - push to gitgub and all the github actions should execute
+    - after a moment: ping app.carsties.store
+- Tying up the loose ends
+    - now we can use our app: http://app.carsties.store
+    - core / API address issue - We need to provide the configuration for our gateway into our client app because that's still point to https://api.caesties.com.
+        And of course the origin where we're coming from. Now, this also needs to be updated for our gateway service as well.
+    - logging problems - because we've got a redirection URL set on identity server to redirect us to api.caesties.com.
+        Now of course that's not going to function because we're immediately going to get the I cannot reach app.caesties.com
+        because we've ensured all those Kubernetes nodes or that Kubernetes cluster  has been removed all its content.
+        So we need to update things and that of course includes our identity server.
+    - First of all, that's going to mean logging into our identity server once again.
+        And let's go back to Digitalocean to get a reminder of the IP address of our Identity server, 
+        which is being hosted separately on its own droplets.
+        - [Carsties-local-terminal] ssh root@<identity-server-ip>
+            - [id-terminal] cd /var/app
+            - [id-terminal] sudo nano docker-compose.yml
+                - we want to edit the docker compose file:
+                    - (update) ClientApp=https://app.carsties.store
+                    - (add) ClientSecret=<set-secure-password> # for ClientSecrets in [Carsties/src/IdentityServer/config.cs]
+        - update [Carsties/src/IdentityServer], [Carsties/frontend/web-app/app/lib], [Carsties/infra] to use the ClientSecret
+        - update [k8s/gateway-depl.yml], [k8s/webapp-depl.yml], [SignalRProvider.tsx] to use app.caesties.store / api.caesties.store
+        - apply secrets on the remote cluster
+            - [prod-k8s] verify context: k8s config get-contexts
+            - [prod-k8s] k8s apply -f prod-secrets.yml 
+        - push to gitgub and all the github actions execute
+        - [remote-id-terminal-->/var/app] docker compose pull identity-svc
+        - [remote-id-terminal-->/var/app] docker compose up -d

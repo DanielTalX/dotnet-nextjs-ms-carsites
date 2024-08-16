@@ -20,7 +20,7 @@ public static class Config
     public static IEnumerable<Client> Clients(IConfiguration config) =>
         new Client[]
         {
-            new Client
+            new Client // remove postman from production
             {
                 ClientId = "postman",
                 ClientName = "Postman",
@@ -33,7 +33,7 @@ public static class Config
             {
                 ClientId = "nextApp",
                 ClientName = "nextApp",
-                ClientSecrets = {new Secret("secret".Sha256())},
+                ClientSecrets = {new Secret(config["ClientSecret"].Sha256())},
                 AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
                 RequirePkce = false,
                 RedirectUris = {config["ClientApp"] + "/api/auth/callback/id-server"},
