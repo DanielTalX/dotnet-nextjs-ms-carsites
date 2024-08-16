@@ -713,10 +713,10 @@ Sec17: Appendix C - Publising to Kubernetes (Internet)
     - after a moment: ping app.carsties.store
 - Tying up the loose ends
     - now we can use our app: http://app.carsties.store
-    - core / API address issue - We need to provide the configuration for our gateway into our client app because that's still point to https://api.caesties.com.
+    - core / API address issue - We need to provide the configuration for our gateway into our client app because that's still point to https://api.carsties.com.
         And of course the origin where we're coming from. Now, this also needs to be updated for our gateway service as well.
-    - logging problems - because we've got a redirection URL set on identity server to redirect us to api.caesties.com.
-        Now of course that's not going to function because we're immediately going to get the I cannot reach app.caesties.com
+    - logging problems - because we've got a redirection URL set on identity server to redirect us to api.carsties.com.
+        Now of course that's not going to function because we're immediately going to get the I cannot reach app.carsties.com
         because we've ensured all those Kubernetes nodes or that Kubernetes cluster  has been removed all its content.
         So we need to update things and that of course includes our identity server.
     - First of all, that's going to mean logging into our identity server once again.
@@ -729,10 +729,51 @@ Sec17: Appendix C - Publising to Kubernetes (Internet)
                     - (update) ClientApp=https://app.carsties.store
                     - (add) ClientSecret=<set-secure-password> # for ClientSecrets in [Carsties/src/IdentityServer/config.cs]
         - update [Carsties/src/IdentityServer], [Carsties/frontend/web-app/app/lib], [Carsties/infra] to use the ClientSecret
-        - update [k8s/gateway-depl.yml], [k8s/webapp-depl.yml], [SignalRProvider.tsx] to use app.caesties.store / api.caesties.store
+        - update [k8s/gateway-depl.yml], [k8s/webapp-depl.yml], [SignalRProvider.tsx] to use app.carsties.store / api.carsties.store
         - apply secrets on the remote cluster
             - [prod-k8s] verify context: k8s config get-contexts
             - [prod-k8s] k8s apply -f prod-secrets.yml 
         - push to gitgub and all the github actions execute
         - [remote-id-terminal-->/var/app] docker compose pull identity-svc
         - [remote-id-terminal-->/var/app] docker compose up -d
+- Adding SSL to our deployment - part1
+    - issue: net::ERR_CERT_AUTHORITY_INVALID
+    - https://cert-manager.io/
+    - https://cert-manager.io/docs/tutorials/acme/nginx-ingress/ 
+        - let's encrypt is excellent because it gives us free SSL certificates and it's automatically going to renew them when they need to as well.
+        - Now you do need a domain name for this, of course, that you have control of as that's going to be
+            a requirement for let's encrypt, but let's give this a go.
+        - Step 5 - Deploy cert-manager
+            - https://cert-manager.io/docs/installation/
+            - [prod-k8s] verify context: k8s config get-contexts
+            - [prod-k8s] kubectl apply -f https://github.com/cert-manager/...
+        - Step 6 - Configure a Let's Encrypt Issuer
+            - [prod-k8s] create staging-le.yml with correct email and change kind from Issuer to ClusterIssuer.
+            - [prod-k8s] kubectl apply -f staging-le.yml
+            - [prod-k8s] k8s get clusterissuer
+            - [prod-k8s] k8s describe clusterissuer
+            - [prod-k8s] kubectl apply -f ingress-svc.yml
+            - [prod-k8s] kubectl get secrets (see carsties-tls-..)
+            - (after a minute) [prod-k8s] kubectl get certificate ==> but the REDAY status is False
+        - Step 7 - Deploy a TLS Ingress Resource
+- Adding SSL to our deployment - part2
+    - how to find the problem:
+        - [prod-k8s] kubectl describe certificate carsties-tls
+        - [prod-k8s] kubectl get certificaterequest
+        - [prod-k8s] kubectl get order
+        - [prod-k8s] kubectl describe order <carsties-tls-order-hash> (see 2 challenges)
+        - [prod-k8s] kubectl get challenge
+        - [prod-k8s] kubectl describe challenge <carsties-tls-challenge1-hash> ===> reason: waiting for HTTP-01 challenge propagation ...
+    - solve the problem:
+        - https://stackoverflow.com/questions/72220278/waiting-for-http-01-challenge-propagation-failed-to-perform-self-check-get-requ
+        - https://github.com/cert-manager/cert-manager/issues/3238 => finally i have got a solution, i have follow the tutorial on digitalocean and step number 5 solve the issue
+        - https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nginx-ingress-with-cert-manager-on-digitalocean-kubernetes#step-5-enabling-pod-communication-through-the-load-balancer-optional
+        - [digitalocean] -> networking -> domains -> Create new record:
+            - A =>      [hostname]=workaround [wil direct to]=CarstiesAppLoadBalancerName [TTL]=30
+        - https://kubernetes.github.io/ingress-nginx/deploy/#digital-ocean
+            - take https://kubernetes.github.io/ingress-nginx/deploy/#digital-ocean and paste in browser
+            - find the service: service.beta.kubernetes.io/do-loadbalancer-enable-proxy-protocol
+            - create ingress-nginx-svc.yml in [prod-k8s]
+            - and add service.beta.kubernetes.io/do-loadbalancer-hostname: "workaround.example.com" as it said in digitalocean step5
+            - [prod-k8s] kubectl apply -f ingress_nginx_svc.yaml
+            - [prod-k8s] kubectl get certificate ==> Now REDAY status is True
